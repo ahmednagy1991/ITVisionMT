@@ -34,7 +34,7 @@ export class DashboardPage {
   doughnutChart: any;
   dashbrd:string;
   constructor(public navCtrl: NavController,public helper:Heplers, public api:Api,public navParams: NavParams,public translateService: TranslateService) {
-  }
+  } 
 
   ionViewDidLoad() {
     this.dashbrd="Reports";
