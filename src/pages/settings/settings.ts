@@ -4,6 +4,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Settings } from '../../providers';
+import { File } from '@ionic-native/file';
+import { AlertController } from 'ionic-angular';
+
+import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
+import { config } from '../../providers/Config';
+import { Storage } from '@ionic/storage';
+import { Heplers } from '../../providers/Helper/Helpers';
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -18,6 +25,12 @@ import { Settings } from '../../providers';
 export class SettingsPage {
   // Our local settings object
   options: any;
+  MainURL: string;
+  settingItem: { mainurl: string } = {
+    mainurl: 'test@example.com'
+
+  };
+
 
   settingsReady = false;
 
@@ -38,11 +51,19 @@ export class SettingsPage {
     public settings: Settings,
     public formBuilder: FormBuilder,
     public navParams: NavParams,
-    public translate: TranslateService) {
+    public translate: TranslateService,
+    private qrScanner: QRScanner,
+    private file: File,
+    public alertCtrl: AlertController, public helper: Heplers, public config: config, public storage: Storage
+  ) {
+
+    this.storage.get(this.config.MainURL_Key).then(res => this.settingItem.mainurl = res);
+
   }
 
   _buildForm() {
     let group: any = {
+      ServiceURL: this.MainURL,
       option1: [this.options.option1],
       option2: [this.options.option2],
       option3: [this.options.option3]
@@ -63,6 +84,35 @@ export class SettingsPage {
     this.form.valueChanges.subscribe((v) => {
       this.settings.merge(this.form.value);
     });
+  }
+
+
+  scanServiceURL() {
+    this.qrScanner.prepare()
+    .then((status: QRScannerStatus) => {
+       if (status.authorized) {
+         // camera permission was granted
+  
+         this.helper.showMessage("Authorized",'Error is');
+         // start scanning
+         let scanSub = this.qrScanner.scan().subscribe((text: string) => {
+           console.log('Scanned something', text);
+  
+           this.qrScanner.hide(); // hide camera preview
+           scanSub.unsubscribe(); // stop scanning
+         });
+         this.qrScanner.show();
+  
+       } else if (status.denied) {
+        this.helper.showMessage("Denied",'Error is');
+         // camera permission was permanently denied
+         // you must use QRScanner.openSettings() method to guide the user to the settings page
+         // then they can grant the permission from there
+       } else {
+         // permission was denied, but not permanently. You can ask for permission again at a later time.
+       }
+    })
+    .catch((e: any) => this.helper.showMessage(e,'Error is'));
   }
 
   ionViewDidLoad() {
@@ -88,8 +138,47 @@ export class SettingsPage {
       this._buildForm();
     });
   }
+  saveSettings() {
+    debugger;
+    var temp2222=this.config.MainURL_Key;
+    let temp = this.settingItem.mainurl;
+    this.storage.set(this.config.MainURL_Key, this.settingItem.mainurl);
+    this.navCtrl.push('WelcomePage');
+    //debugger;
+    //this.file.writeFile(this.file.dataDirectory, "SettingFile",this.settingItem.mainurl);
+    //this.file.createFile(this.file.dataDirectory, "SettingFile",true);
+    //this.file.checkFile(this.file.dataDirectory, "SettingFile").then(_ => this.saveSettingsConfirmation("File Found")).catch(err => this.saveSettingsConfirmation(err));
+  }
+
+
+
+  saveSettingsConfirmation(message: string) {
+    const alert = this.alertCtrl.create({
+      title: "",
+      subTitle: '',
+      buttons: ['OK']
+    });
+
+    this.translate.get("SetConfTitle").subscribe((res) => {
+      alert.setTitle(res);
+    });
+    if (typeof message != 'undefined' && message) {
+      alert.setSubTitle(message);
+
+    }
+    else {
+      this.translate.get("SetConfBody").subscribe((res) => {
+        alert.setSubTitle(res);
+      })
+    }
+
+
+    alert.present();
+  }
+
 
   ngOnChanges() {
+
     console.log('Ng All Changes');
   }
 }

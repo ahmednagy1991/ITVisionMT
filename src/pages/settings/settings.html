@@ -8,8 +8,16 @@
 
 <ion-content>
 
-  <form [formGroup]="form" *ngIf="settingsReady">
-    <ion-list *ngIf="page == 'main'">
+  <!-- [formGroup]="form" *ngIf="settingsReady" -->
+
+  <form (submit)="saveSettings()">
+    <ion-item>
+      <ion-label>{{ 'ServiceURL' | translate }}</ion-label>
+      <ion-input [(ngModel)]="settingItem.mainurl" name="mainurl"></ion-input>
+    </ion-item>
+
+
+    <!-- <ion-list *ngIf="page == 'main'">
       <ion-item>
         <ion-label>{{ 'SETTINGS_OPTION1' | translate }}</ion-label>
         <ion-toggle formControlName="option1"></ion-toggle>
@@ -39,7 +47,8 @@
         <ion-label>{{ 'SETTINGS_OPTION4' | translate }}</ion-label>
         <ion-input formControlName="option4"></ion-input>
       </ion-item>
-    </ion-list>
+    </ion-list> -->
+    <button ion-button round block>{{ 'Save' | translate }}</button>
   </form>
-
+  <button  (click) ="scanServiceURL()" ion-button round block>{{ 'ScanService' | translate }}</button>
 </ion-content>

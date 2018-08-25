@@ -1,0 +1,112 @@
+<!--
+  Generated template for the TimeTablePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<style>
+  .image {
+   
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 5px gray;
+    display: inline-block;
+   
+  }
+</style>
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>TimeTable</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+
+
+  <ion-card>
+    <ion-card-content>
+
+      <ion-item>
+        <ion-label>{{'From'|translate}}</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>{{'To'|translate}}</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+
+
+
+
+  <ion-list>
+    <ion-item>
+      <!-- <ion-thumbnail item-start>
+        <img class="image" src="/assets/img/blue.png">
+      </ion-thumbnail> -->
+      <h2>Ahmed Nagy</h2>
+      <p>Sun - Thu</p>
+      <button ion-button clear item-end (click)="TimeTableDetails()">{{'Details'|translate}}</button>
+    </ion-item>
+
+    <ion-item>
+      <!-- <ion-thumbnail item-start>
+          <img class="image" src="/assets/img/blue.png">
+        </ion-thumbnail> -->
+      <h2>Ahmed Nagy</h2>
+      <p>Sun - Thu</p>
+      <button ion-button clear item-end (click)="TimeTableDetails()">{{'Details'|translate}}</button>
+    </ion-item>
+
+
+    <ion-item>
+      <!-- <ion-thumbnail item-start>
+            <img class="image" src="/assets/img/blue.png">
+          </ion-thumbnail> -->
+      <h2>Ahmed Nagy</h2>
+      <p>Sun - Thu</p>
+      <button ion-button clear item-end (click)="TimeTableDetails()">{{'Details'|translate}}</button>
+    </ion-item>
+
+
+
+    <ion-item>
+      <!-- <ion-thumbnail item-start>
+              <img class="image" src="/assets/img/blue.png">
+            </ion-thumbnail> -->
+      <h2>Ahmed Nagy</h2>
+      <p>Sun - Thu</p>
+      <button ion-button clear item-end (click)="TimeTableDetails()">{{'Details'|translate}}</button>
+    </ion-item>
+
+
+    <ion-item>
+      <!-- <ion-thumbnail item-start>
+                <img class="image" src="/assets/img/blue.png">
+              </ion-thumbnail> -->
+      <h2>Ahmed Nagy</h2>
+      <p>Sun - Thu</p>
+      <button ion-button clear item-end (click)="TimeTableDetails()">{{'Details'|translate}}</button>
+    </ion-item>
+
+
+    <ion-item>
+      <!-- <ion-thumbnail item-start>
+                  <img class="image" src="/assets/img/blue.png">
+                </ion-thumbnail> -->
+      <h2>Ahmed Nagy</h2>
+      <p>Sun - Thu</p>
+      <button ion-button clear item-end (click)="TimeTableDetails()">{{'Details'|translate}}</button>
+    </ion-item>
+
+
+
+  </ion-list>
+</ion-content>

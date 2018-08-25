@@ -8,10 +8,30 @@ import { IonicStorageModule, Storage } from '@ionic/storage';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+// import { Http,Headers } from '@angular/http';
+import {HttpModule} from '@angular/http';
+import { Geolocation } from '@ionic-native/geolocation';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
+import { Device } from '@ionic-native/device';
+import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
+import { Globalization } from '@ionic-native/globalization';
 
+
+import {
+  GoogleMaps,
+  GoogleMap,
+  GoogleMapsEvent,
+  GoogleMapOptions,
+  CameraPosition,
+  MarkerOptions,
+  Marker
+} from '@ionic-native/google-maps';
 import { Items } from '../mocks/providers/items';
 import { Settings, User, Api } from '../providers';
 import { MyApp } from './app.component';
+import { File } from '@ionic-native/file';
+import { config } from '../providers/Config';
+import { Heplers } from '../providers/Helper/Helpers';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -40,7 +60,8 @@ export function provideSettings(storage: Storage) {
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
+    HttpModule,
+    HttpClientModule,    
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -58,9 +79,19 @@ export function provideSettings(storage: Storage) {
   providers: [
     Api,
     Items,
+    QRScanner,
     User,
+    Geolocation,
+   // Http,
+    File,
+    config,
+    Globalization,
+    Heplers,
     Camera,
-    SplashScreen,
+    Device,
+    NativeGeocoder,
+    SplashScreen,   
+    GoogleMaps,
     StatusBar,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development

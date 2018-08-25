@@ -4,5 +4,11 @@
     "cordova": {}
   },
   "type": "ionic-angular",
-  "pro_id": "66f414a3"
+  "pro_id": "66f414a3",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://52.232.2.194/ivmtwebsdk/ea.dll/api/v52/emxauth2"
+    }
+  ]
 }

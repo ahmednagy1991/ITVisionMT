@@ -7,7 +7,7 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class Settings {
   private SETTINGS_KEY: string = '_settings';
-
+  public SETTINGS_MAINURL: string = '_mainurl';
   settings: any;
 
   _defaults: any;

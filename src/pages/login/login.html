@@ -8,15 +8,40 @@
 
 
 <ion-content>
-  <form (submit)="doLogin()">
-    <ion-list>
 
-      <ion-item>
-        <ion-label fixed>{{ 'EMAIL' | translate }}</ion-label>
-        <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
-      </ion-item>
+  <ion-grid>
+    <div class="splash-bg"></div>
+    <div class="splash-info">
+      <div class="splash-logo"></div>
+      <div class="splash-intro">
+        <!-- {{ 'WELCOME_INTRO' | translate }} -->
+      </div>
+    </div>
+    <ion-row>
+      <ion-col col-12></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12></ion-col>
+    </ion-row>
+    <ion-row>
 
-      <!--
+    </ion-row>
+    <form (submit)="doLogin()">
+      <ion-list>
+
+        <ion-item>
+          {{stval}}
+          <ion-label fixed>{{ 'EmployeeID' | translate }}</ion-label>
+          <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
+        </ion-item>
+
+        <!--
       Want to use a Username instead of an Email? Here you go:
 
       <ion-item>
@@ -25,15 +50,24 @@
       </ion-item>
       -->
 
-      <ion-item>
-        <ion-label fixed>{{ 'PASSWORD' | translate }}</ion-label>
-        <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
-      </ion-item>
 
-      <div padding>
-        <button ion-button color="primary" block>{{ 'LOGIN_BUTTON' | translate }}</button>
-      </div>
 
-    </ion-list>
-  </form>
+        <ion-item>
+          <ion-label fixed>{{ 'PASSWORD' | translate }}</ion-label>
+          <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label>{{'RememberMe'|translate}}</ion-label>
+          <ion-checkbox [(ngModel)]="account.rembmerMe" color="dark" name="rembmerMe"></ion-checkbox>
+        </ion-item>
+
+        <div padding>
+          <button ion-button round color="primary" block>{{ 'LOGIN_BUTTON' | translate }}</button>
+        </div>
+
+      </ion-list>
+    </form>
+  </ion-grid>
 </ion-content>
