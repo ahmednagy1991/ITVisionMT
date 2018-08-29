@@ -21,8 +21,10 @@ import { config } from '../providers/Config';
     <ion-content>
       <ion-list>
         <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        <ion-icon name="{{p.icon}}"></ion-icon>
-          {{p.title}}
+      
+       
+       <ion-icon name="{{p.icon}}"></ion-icon>
+       {{p.title}}
         </button>
       </ion-list>
     </ion-content>
@@ -30,6 +32,11 @@ import { config } from '../providers/Config';
   </ion-menu>
   <ion-nav #content [root]="rootPage"></ion-nav>`
 })
+
+// <div *ngIf="p.isHead;else  <ion-item-divider color="light">A</ion-item-divider>">
+        
+// </div>
+
 export class MyApp {
   rootPage = FirstRunPage;
 
@@ -47,26 +54,26 @@ export class MyApp {
     // { title: 'Menu', component: 'MenuPage' },
     // { title: 'Settings', component: 'SettingsPage' },
     // { title: 'Search', component: 'SearchPage' },
-    { title: 'Home', component: 'DashboardPage', icon: 'home' },
-    { title: 'Profile', component: 'ProfilePage', icon: 'person' },
-    { title: 'Attendance', component: 'AttendancePage', icon: 'clock' },
-    { title: 'Time Table', component: 'TimeTablePage', icon: 'clipboard' },    
-    { title: 'Today Punching', component: 'TodayPunchingPage', icon: 'finger-print' },
-    { title: 'Leaves', component: 'LeavesPage', icon: 'sunny' },
-    { title: 'Excuses', component: 'ExcusesPage', icon: 'walk' },  
-    { title: 'Duties', component: 'DutiesPage', icon: 'briefcase' }, 
-    { title: 'Request Status', component: 'RequestStatusPage', icon: 'trending-up' },    
-    { title: 'Submit execuse', component: 'SubmitExecusePage', icon: 'calendar' },    
-    { title: 'Manula Adjustment Request', component: 'ManulaAdjustmentPage', icon: 'alarm' },  
-    { title: 'Submit Leave Request', component: 'LeaveRequestPage', icon: 'albums' },  
-    { title: 'Geo Punching', component: 'PunchingPage', icon: 'map' },
-    { title: 'Web Requests', component: 'WebRequestPage', icon: 'globe' },  
-    { title: 'Change Password', component: 'ChangePasswordPage', icon: 'key' },  
-    { title: 'Logout', component: '', icon: 'power' },  
+    { title: 'Home', component: 'DashboardPage', icon: 'home',isHead:false },
+    { title: 'Profile', component: 'ProfilePage', icon: 'person' ,isHead:false},
+    { title: 'Attendance', component: 'AttendancePage', icon: 'clock',isHead:false },
+    { title: 'Time Table', component: 'TimeTablePage', icon: 'clipboard',isHead:false },
+    { title: 'Today Punching', component: 'TodayPunchingPage', icon: 'finger-print' ,isHead:false},
+    { title: 'Leaves', component: 'LeavesPage', icon: 'sunny' ,isHead:false},
+    { title: 'Excuses', component: 'ExcusesPage', icon: 'walk',isHead:false },
+    { title: 'Duties', component: 'DutiesPage', icon: 'briefcase',isHead:false },
+    { title: 'Request Status', component: 'RequestStatusPage', icon: 'trending-up',isHead:false },
+    { title: 'Submit execuse', component: 'SubmitExecusePage', icon: 'calendar',isHead:false },
+    { title: 'Manula Adjustment Request', component: 'ManulaAdjustmentPage', icon: 'alarm',isHead:false },
+    { title: 'Submit Leave Request', component: 'LeaveRequestPage', icon: 'albums',isHead:false },
+    { title: 'Geo Punching', component: 'PunchingPage', icon: 'map',isHead:false },
+    { title: 'Web Requests', component: 'WebRequestPage', icon: 'globe',isHead:false },
+    { title: 'Change Password', component: 'ChangePasswordPage', icon: 'key',isHead:false },
+    { title: 'Logout', component: '', icon: 'power',isHead:false },
 
   ]
 
-  constructor(private translate: TranslateService,public storage: Storage, public Myconfig: config, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
+  constructor(private translate: TranslateService, public storage: Storage, public Myconfig: config, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -105,7 +112,7 @@ export class MyApp {
   Logout() {
     this.storage.set(this.Myconfig.Username_Key, "");
     this.storage.set(this.Myconfig.Password_Key, "");
-     this.nav.push("WelcomePage");
+    this.nav.push("WelcomePage");
     this.nav.setRoot("WelcomePage");
   }
 
@@ -115,7 +122,7 @@ export class MyApp {
     }
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-   // this.nav.setRoot(page.component);
-   this.nav.push(page.component);
+    // this.nav.setRoot(page.component);
+    this.nav.push(page.component);
   }
 }
