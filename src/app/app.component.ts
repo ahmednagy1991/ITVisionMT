@@ -13,34 +13,112 @@ import { config } from '../providers/Config';
 @Component({
   template: `<ion-menu [content]="content">
     <ion-header>
-      <ion-toolbar>
-        <ion-title>ITVisionMT</ion-title>
-      </ion-toolbar>
+    <ion-item>
+    <ion-avatar item-start>
+      <img src="assets/img/marty-avatar.png">
+    </ion-avatar>
+    <h2>Ahmed Nagy</h2>
+    <h2>.Net Developer</h2>
+    <p>Software Development Dapartment</p>
+  </ion-item>
+
+    
     </ion-header>
 
     <ion-content>
-      <ion-list>
-        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-      
-       
-       <ion-icon name="{{p.icon}}"></ion-icon>
-       {{p.title}}
-        </button>
-      </ion-list>
+
+
+
+    <ion-item-group>
+    <div *ngFor="let group of Groups">
+    <ion-item-divider color="light">{{group.GroupName}}</ion-item-divider>
+    <ion-item menuClose  *ngFor="let p of group.SubPages" (click)="openPage(p)">
+    <ion-icon name="{{p.icon}}" item-start></ion-icon>
+    {{p.title}}
+    </ion-item>
+    </div>
+    
+
+
+   
+  
+
+
+    </ion-item-group>
+
+
+   
+    
     </ion-content>
 
   </ion-menu>
   <ion-nav #content [root]="rootPage"></ion-nav>`
 })
 
+// <ion-icon name="{{p.icon}}"></ion-icon>
+//        {{p.title}}
+
+
 // <div *ngIf="p.isHead;else  <ion-item-divider color="light">A</ion-item-divider>">
-        
+
 // </div>
+
+
+// <ion-toolbar>
+// <ion-title>ITVisionMT</ion-title>
+// </ion-toolbar>
+
+
+
+// <ion-content>
+// <ion-list>
+//   <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+
+
+//  <ion-icon name="{{p.icon}}"></ion-icon>
+//  {{p.title}}
+//   </button>
+// </ion-list>
+// </ion-content>
+
+
+
 
 export class MyApp {
   rootPage = FirstRunPage;
 
   @ViewChild(Nav) nav: Nav;
+
+
+  Groups: any[] = [
+    {
+      GroupName: 'My Attendance',
+      SubPages: [
+        { title: 'Home', component: 'DashboardPage', icon: 'home', isHead: false },
+        { title: 'Profile', component: 'ProfilePage', icon: 'person', isHead: false },
+        { title: 'Attendance', component: 'AttendancePage', icon: 'clock', isHead: false },
+        { title: 'Time Table', component: 'TimeTablePage', icon: 'clipboard', isHead: false },
+        { title: 'Today Punching', component: 'TodayPunchingPage', icon: 'finger-print', isHead: false },
+        { title: 'Leaves', component: 'LeavesPage', icon: 'sunny', isHead: false },
+        { title: 'Excuses', component: 'ExcusesPage', icon: 'walk', isHead: false },
+        { title: 'Duties', component: 'DutiesPage', icon: 'briefcase', isHead: false },
+        { title: 'Logout', component: '', icon: 'power', isHead: false }
+       
+      ]
+
+    },
+    { GroupName: 'My Requests' ,
+    SubPages: [
+      { title: 'Request Status', component: 'RequestStatusPage', icon: 'trending-up', isHead: false },
+      { title: 'Submit execuse', component: 'SubmitExecusePage', icon: 'calendar', isHead: false },
+      { title: 'Manula Adjustment Request', component: 'ManulaAdjustmentPage', icon: 'alarm', isHead: false },
+      { title: 'Submit Leave Request', component: 'LeaveRequestPage', icon: 'albums', isHead: false },
+      { title: 'Geo Punching', component: 'PunchingPage', icon: 'map', isHead: false },
+      { title: 'Web Requests', component: 'WebRequestPage', icon: 'globe', isHead: false },
+      { title: 'Change Password', component: 'ChangePasswordPage', icon: 'key', isHead: false }
+    ]
+  }
+  ];
 
   pages: any[] = [
     // { title: 'Tutorial', component: 'TutorialPage' },
@@ -54,22 +132,22 @@ export class MyApp {
     // { title: 'Menu', component: 'MenuPage' },
     // { title: 'Settings', component: 'SettingsPage' },
     // { title: 'Search', component: 'SearchPage' },
-    { title: 'Home', component: 'DashboardPage', icon: 'home',isHead:false },
-    { title: 'Profile', component: 'ProfilePage', icon: 'person' ,isHead:false},
-    { title: 'Attendance', component: 'AttendancePage', icon: 'clock',isHead:false },
-    { title: 'Time Table', component: 'TimeTablePage', icon: 'clipboard',isHead:false },
-    { title: 'Today Punching', component: 'TodayPunchingPage', icon: 'finger-print' ,isHead:false},
-    { title: 'Leaves', component: 'LeavesPage', icon: 'sunny' ,isHead:false},
-    { title: 'Excuses', component: 'ExcusesPage', icon: 'walk',isHead:false },
-    { title: 'Duties', component: 'DutiesPage', icon: 'briefcase',isHead:false },
-    { title: 'Request Status', component: 'RequestStatusPage', icon: 'trending-up',isHead:false },
-    { title: 'Submit execuse', component: 'SubmitExecusePage', icon: 'calendar',isHead:false },
-    { title: 'Manula Adjustment Request', component: 'ManulaAdjustmentPage', icon: 'alarm',isHead:false },
-    { title: 'Submit Leave Request', component: 'LeaveRequestPage', icon: 'albums',isHead:false },
-    { title: 'Geo Punching', component: 'PunchingPage', icon: 'map',isHead:false },
-    { title: 'Web Requests', component: 'WebRequestPage', icon: 'globe',isHead:false },
-    { title: 'Change Password', component: 'ChangePasswordPage', icon: 'key',isHead:false },
-    { title: 'Logout', component: '', icon: 'power',isHead:false },
+    // { title: 'Home', component: 'DashboardPage', icon: 'home', isHead: false },
+    // { title: 'Profile', component: 'ProfilePage', icon: 'person', isHead: false },
+    // { title: 'Attendance', component: 'AttendancePage', icon: 'clock', isHead: false },
+    // { title: 'Time Table', component: 'TimeTablePage', icon: 'clipboard', isHead: false },
+    // { title: 'Today Punching', component: 'TodayPunchingPage', icon: 'finger-print', isHead: false },
+    // { title: 'Leaves', component: 'LeavesPage', icon: 'sunny', isHead: false },
+    // { title: 'Excuses', component: 'ExcusesPage', icon: 'walk', isHead: false },
+    // { title: 'Duties', component: 'DutiesPage', icon: 'briefcase', isHead: false },
+    // { title: 'Request Status', component: 'RequestStatusPage', icon: 'trending-up', isHead: false },
+    // { title: 'Submit execuse', component: 'SubmitExecusePage', icon: 'calendar', isHead: false },
+    // { title: 'Manula Adjustment Request', component: 'ManulaAdjustmentPage', icon: 'alarm', isHead: false },
+    // { title: 'Submit Leave Request', component: 'LeaveRequestPage', icon: 'albums', isHead: false },
+    // { title: 'Geo Punching', component: 'PunchingPage', icon: 'map', isHead: false },
+    // { title: 'Web Requests', component: 'WebRequestPage', icon: 'globe', isHead: false },
+    // { title: 'Change Password', component: 'ChangePasswordPage', icon: 'key', isHead: false },
+    // { title: 'Logout', component: '', icon: 'power', isHead: false },
 
   ]
 
