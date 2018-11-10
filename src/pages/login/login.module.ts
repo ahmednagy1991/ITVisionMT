@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicPageModule } from 'ionic-angular';
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { LoginPage } from './login';
 
 @NgModule({
@@ -14,6 +14,7 @@ import { LoginPage } from './login';
   ],
   exports: [
     LoginPage
-  ]
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class LoginPageModule { }

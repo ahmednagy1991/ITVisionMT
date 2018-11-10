@@ -8,11 +8,84 @@
 
   <ion-navbar>
     <ion-title>RequestStatus</ion-title>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-card>
+    <ion-card-content>
+
+      <ion-item>
+        <ion-label>From Date</ion-label>
+        <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="dateComp.from"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>To Date</ion-label>
+        <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="dateComp.to"></ion-datetime>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <button ion-button full (click)="GetRequestStatus()">View Requests</button>
+
+
+
+  <ion-card>
+    <ion-card-header>
+
+      <ion-grid>
+        <ion-row nowrap>
+          <ion-col col-10>Request Status</ion-col>
+          <ion-col col-2>
+            <!-- <button ion-fab mini (click)="refreshPunches()">
+              <ion-icon name="refresh" color="green"></ion-icon>
+            </button> -->
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+
+    <div style="overflow-x:auto;">
+
+      <ion-grid>
+        <ion-row nowrap>
+
+          <ion-col class="thro">Ref#</ion-col>
+          <ion-col class="thro">Request Type</ion-col>
+          <ion-col class="thro">Date</ion-col>
+          <ion-col class="thro">Status</ion-col>
+          <ion-col class="thro">Handle Date</ion-col>
+          <ion-col class="thro">Handle By</ion-col>
+          <ion-col class="thro">Requester</ion-col>         
+          <!--  -->
+        </ion-row>
+
+        <ion-row nowrap *ngFor="let att of RequestList" class="ro">
+            <ion-col>{{att.REQUEST_ID}}</ion-col>
+            <ion-col>({{helper.GetRequestType(att.REQUEST_TYPE)}}) {{helper.GetPnchType(att.REQUEST_PARAM1)}} Punch - Request Note : {{att.REQUEST_NOTE}} - by : {{att.WF_NAME}}/{{att.WF_STOP_POINT}} </ion-col>  
+            <ion-col>{{helper.GetRequestStatus(att.REQUEST_STATUS)}}</ion-col>
+            <ion-col>{{att.REQUEST_DATE | date:'yyyy/MM/dd'}}</ion-col>
+            <ion-col>{{att.HANDLED_DATE | date:'yyyy/MM/dd'}}</ion-col>
+            <ion-col>{{att.HANDLED_BY}}</ion-col>
+            <ion-col>{{att.EMP_NAME}}</ion-col>
+                    
+          <!-- <ion-col>{{att.AT_DATE | date:'yyyy/MM/dd'}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_WORK_DURATION)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_WORK)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_ABSENT)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_OVERTIME)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_DUTY_OVERTIME)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_DUTY_OVERTIME)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_DUTIES)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_EXCUSE)}}</ion-col> -->
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-card>
 
 </ion-content>

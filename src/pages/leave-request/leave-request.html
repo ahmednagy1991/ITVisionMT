@@ -8,6 +8,9 @@
 
   <ion-navbar>
     <ion-title>LeaveRequest</ion-title>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
   </ion-navbar>
 
 </ion-header>
@@ -15,4 +18,57 @@
 
 <ion-content padding>
 
+
+  <form (submit)="submitLeave()">
+  
+      <ion-item>
+        <ion-label fixed>Description</ion-label>
+        <ion-input type="text" [(ngModel)]="leaveRequest.Description" name="Description"></ion-input>
+      </ion-item>
+
+
+      <ion-item>
+          <ion-label>Start Date</ion-label>
+          <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="leaveRequest.StartDate" name="StartDate"></ion-datetime>
+        </ion-item>
+
+      
+
+      <ion-item>
+        <ion-label>End Date</ion-label>
+        <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="leaveRequest.EndDate" name="EndDate"></ion-datetime>
+      </ion-item>
+
+
+     <ion-item class="item-leave-height">
+          <ion-label>Pay Status</ion-label>
+          <ion-select [(ngModel)]="leaveRequest.Paystatus" name="Paystatus">
+              <ion-option value="0">Paid</ion-option>
+              <ion-option value="1">Unpaid</ion-option>             
+          </ion-select>
+      </ion-item> 
+
+
+      <ion-item class="item-leave-height">
+          <ion-label>Reasons</ion-label>
+          <ion-select [(ngModel)]="leaveRequest.ReasonID" name="ReasonID">
+              <ion-option *ngFor="let item of resons" value="{{item.reason_id}}">{{item.reason}}</ion-option>             
+          </ion-select>
+      </ion-item> 
+
+
+      <ion-item>
+        <ion-label fixed>Notes</ion-label>
+        <ion-input type="text" [(ngModel)]="leaveRequest.Notes" name="Notes"></ion-input>
+      </ion-item>
+
+
+
+
+      <div padding>
+        <button ion-button round color="primary" block>submit</button>
+      </div>
+
+ 
+  </form>
 </ion-content>

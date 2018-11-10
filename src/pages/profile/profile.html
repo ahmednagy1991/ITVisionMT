@@ -8,47 +8,60 @@
 
   <ion-navbar>
     <ion-title>Profile</ion-title>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-    <ion-card>
-
-        <ion-item>
-          <ion-avatar item-start>
-            <img src="assets/img/marty-avatar.png">
-          </ion-avatar>
-          <h2>Marty McFly</h2>
-          <p>November 5, 1955</p>
-        </ion-item>
-      
-        <!-- <img src="assets/img/advance-card-bttf.png"> -->
-      
-        <ion-card-content>
-          <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>
-        </ion-card-content>
-      
+  <ion-card>
+    <div style="overflow-x:auto;">
+      <ion-grid>
         <ion-row>
-          <ion-col>
-            <!-- <button ion-button icon-start clear small>
-              <ion-icon name="thumbs-up"></ion-icon>
-              <div>12 Likes</div>
-            </button> -->
-          </ion-col>
-          <ion-col>
-            <!-- <button ion-button icon-start clear small>
-              <ion-icon name="text"></ion-icon>
-              <div>4 Comments</div>
-            </button> -->
-          </ion-col>
-          <ion-col center text-center>
-            <!-- <ion-note>
-              11h ago
-            </ion-note> -->
-          </ion-col>
+          <ion-col>Employee Id</ion-col>
+          <ion-col>{{Employee.EMP_ID}}</ion-col>
         </ion-row>
-      
-      </ion-card>
+
+        <ion-row>
+          <ion-col>Employee Name</ion-col>
+          <ion-col>{{Employee.EMP_NAME}}</ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col>Department Id</ion-col>
+            <ion-col>{{Employee.DEPT_ID}}</ion-col>
+          </ion-row>
+
+        <ion-row>
+          <ion-col>Department Name</ion-col>
+          <ion-col>{{Employee.DEPT_NAME}}</ion-col>
+        </ion-row>
+
+       
+
+        <ion-row>
+          <ion-col>Organization </ion-col>
+          <ion-col>{{Employee.ORG_NAME}}</ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>Date of join</ion-col>
+          <ion-col>{{Employee.DOJ}}</ion-col>
+        </ion-row>
+
+        <!-- <ion-row>
+          <ion-col>floatDOJ</ion-col>
+          <ion-col>{{Employee.floatDOJ}}</ion-col>
+        </ion-row> -->
+
+        <ion-row>
+          <ion-col>State</ion-col>
+          <ion-col>{{Employee.STATE}}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-card>
 </ion-content>

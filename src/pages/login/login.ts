@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
 
+
+
 import { AlertController } from 'ionic-angular';
 import { User } from '../../providers';
 import { MainPage } from '../';
@@ -9,6 +11,14 @@ import { DashboardPage } from '../dashboard/dashboard';
 import { Settings } from '../../providers/settings/settings';
 import { Storage } from '@ionic/storage';
 import { config } from '../../providers/Config';
+import { Api } from '../../providers/api/api';
+import { TokenModel } from '../../models/TokenModel';
+import { ApiParameters } from '../../models/ApiParameters';
+import { AccountModel } from '../../models/AccountModel';
+import { EmployeeModel } from '../../models/EmployeeModel';
+
+import { Heplers } from '../../providers/Helper/Helpers';
+
 
 @IonicPage()
 @Component({
@@ -20,11 +30,11 @@ export class LoginPage {
   // If you're using the username field with or without email, make
   // sure to add it to the type
   enableLogin: boolean;
-  account: { email: string, password: string,rembmerMe:boolean } = {
-    email: 'test@example.com',
-    password: 'test',
-    rembmerMe:false
-  };
+  tokenReponse: TokenModel;
+  empResponse: EmployeeModel;
+  Params: ApiParameters;
+
+  account: AccountModel = { empId: "", password: "", rembmerMe: false };
 
   // Our translated text strings
   private loginErrorString: string;
@@ -38,10 +48,15 @@ export class LoginPage {
     public storage: Storage,
     public setStorage: Settings,
     public alertCtrl: AlertController,
-    public config: config) {
+    public Config: config, public api: Api, public helper: Heplers) {
+    this.storage.get(this.Config.Username_Key).then((res) => {
+      debugger;
+      if (res != "" && res != null && res != "null" && res != undefined) {
+        this.account = JSON.parse(res) as AccountModel;
+        this.doLogin();
+      }
 
-    // this.storage.get(this.config.MainURL_Key).then(res =>this.checkURL(res))
-    // .catch(err=> this.showMessage(err));
+    });
 
     this.translateService.get('LOGIN_ERROR').subscribe((value) => {
       this.loginErrorString = value;
@@ -70,71 +85,59 @@ export class LoginPage {
     });
     alert.present();
   }
-  // Attempt to login in through our User service
-  doLogin() {
-  
-    var temp=this.account.rembmerMe;
-    var temp1=this.account.email;
-    var temp2=this.account.password;
+
+
+
+
+
+
+  validate(res: any) {
     debugger;
-    if(this.account.email!=undefined||this.account.email!="")
-    {
-      //if valid login
-     
-      this.storage.set(this.config.Username_Key,this.account.email);
-      this.storage.set(this.config.Password_Key,this.account.password);
+    this.tokenReponse = res as TokenModel;
+    if (this.tokenReponse.code == '0') {
+
+      this.api.callGet('ivmtwebsdk/ivmtReader.dll/api/v52/ivmtreader/GetEmpInf?emp_id=' + this.account.empId
+        + '&uuid=1213&apikey=' + config.APIKEY + '&fields=EMP_NAME,EMP_ID,DEPT_NAME,DEPT_ID,ORG_NAME,DOJ,STATUS&token=' + this.tokenReponse.result, "").subscribe(res => this.storage.set(this.Config.UserInformation, JSON.stringify(res as EmployeeModel)))
+
+      this.Params = {
+        ApiToken: this.tokenReponse.result,
+        ApiKey: config.APIKEY,
+        EmpId: this.account.empId
+      }
+      this.storage.set(this.Config.ConnectionParameter, JSON.stringify(this.Params));
+
+      let temp = this.account.rembmerMe;
+      debugger;
+      if (this.account.rembmerMe == true) {
+        this.storage.set(this.Config.Username_Key, JSON.stringify(this.account));
+      }
+      this.storage.set(this.Config.ConnectionParameter, JSON.stringify(this.Params));
+      //this.storage.set(this.Config.Username_Key, JSON.stringify());
+      // this.storage.set(this.Config.Username_Key, this.account.empId);
+      // this.storage.set(this.Config.Password_Key, this.account.password);
+      // this.storage.set(this.Config.APIToken, this.tokenReponse.result);
+      // config.EmpID = this.account.empId;
+      this.navCtrl.push(MainPage);
+      this.navCtrl.setRoot(MainPage);
+
     }
-    //config
-    //this.storage.set("Test","Ahmed");
-    // this.storage.get("Test").then(res =>
-    //   this.showMessage(res)
-    // );
-    // this.showMessage(this.file.dataDirectory);
-    //this.file.createDir("ITVisionData","");
-    //   this.file.createFile(this.file.dataDirectory, 'mydir',true);
-    //   this.file.writeFile(this.file.dataDirectory, 'mydir',"test test");
-    //   this.file.checkFile(this.file.dataDirectory, 'mydir').then(_ => this.showMessage('File exists'))
-    //   .catch(err =>
-    //   //this.file.createFile(this.file.dataDirectory, 'mydir',true) 
-    //   this.showMessage(err)
-    // );
-
-
-    // this.storage.set("test","ahmed");
-
-    // this.storage.get("test") .then(settings => {
-    //   debugger;
-    //   const alert = this.alertCtrl.create({
-    //     title: 'New Friend!',
-    //     subTitle:settings["test"],
-    //     buttons: ['OK']
-    //   });
-    //   alert.present();
-
-
-    // });
-    // this.setStorage.setValue(this.setStorage.SETTINGS_MAINURL,"ahmed");
-    // this.setStorage.save();
-    // this.setStorage.load();
-    // this.setStorage.getValue(this.setStorage.SETTINGS_MAINURL).then(res=>this.stval=res);
-
-
-
-    this.navCtrl.push(MainPage);
-    this.navCtrl.setRoot(MainPage);
-
-    // this.user.login(this.account).subscribe((resp) => {
-    //   this.navCtrl.push(MainPage);
-    //   //this.navCtrl.push(DashboardPage);
-    // }, (err) => {
-    //   this.navCtrl.push(MainPage);
-    //   // Unable to log in
-    //   let toast = this.toastCtrl.create({
-    //     message: this.loginErrorString,
-    //     duration: 3000,
-    //     position: 'top'
-    //   });
-    //   toast.present();
-    // });
+    else {
+      this.helper.showMessage("Invalid Login", "Login Error");
+    }
   }
+  doLogin() {
+    debugger;
+    if (this.account.empId != undefined || this.account.empId != "") {
+      this.api.callGet('ivmtwebsdk/ea.dll/api/v52/emxauth2/gettoken?emp_id=' + this.account.empId
+        + '&emp_pwd=' + this.account.password + '&uuid=1213&apikey=' + config.APIKEY + '&hash_ver=sha1', "")
+        .subscribe((res) => {
+          this.validate(res);
+
+        });
+    }
+  }
+
+
+  
 }
+

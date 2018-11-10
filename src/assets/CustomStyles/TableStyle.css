@@ -3,14 +3,35 @@ table {
     border-spacing: 0;
     width: 100%;
     border: 1px solid #ddd;
+    overflow-y:scroll;
+    height:300px;
+    display:block;
+    overflow-x: scroll;
+    overflow:auto;
   }
 
+  
   th,
   td {
     text-align: left;
     padding: 8px;
   }
 
-  tr:nth-child(even) {
+  .GreenBackGround
+  {
+    background: #ccffe6;
+  }
+
+  .thro{
+    font-weight: 900;
+    width: 200%;
+  }
+  .ro:nth-child(even) {
     background-color: #f2f2f2
+  }
+
+  .ro
+  {
+    /* width: 725px; */
+    width: 200%;
   }

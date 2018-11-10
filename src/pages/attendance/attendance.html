@@ -4,96 +4,148 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+<link href="assets/CustomStyles/TableStyle.css" rel="stylesheet">
 <ion-header>
 
   <ion-navbar>
     <ion-title>Attendance</ion-title>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-card>
+    <ion-card-content>
+
+      <ion-item>
+        <ion-label>{{'From'|translate}}</ion-label>
+   
+        <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="dateComp.from"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>{{'To'|translate}}</ion-label>
+        <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="dateComp.to"></ion-datetime>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <button ion-button full (click)="GetAttendance()">View Attendance</button>
+
+
+
+  <div style="overflow-x:auto;">
     <ion-card>
-        <ion-card-content>
+      <ion-grid>
+        <ion-row nowrap>
+
+          <ion-col class="thro">DATE</ion-col>
+          <ion-col class="thro">Reg.HRS</ion-col>
+          <ion-col class="thro">Work</ion-col>
+          <ion-col class="thro">Absent</ion-col>
+          <ion-col class="thro">O.T</ion-col>
+          <ion-col class="thro">Duties O.T</ion-col>
+          <ion-col class="thro">Break</ion-col>
+          <ion-col class="thro">Duties</ion-col>
+          <ion-col class="thro">Excuse</ion-col>
+          <ion-col class="thro">Begin Late</ion-col>
+          <ion-col class="thro">Out Early</ion-col>
+          <ion-col class="thro">Gap</ion-col>
+          <!--  -->
+        </ion-row>
+
+        <ion-row nowrap *ngFor="let att of AttendanceTab" class="ro">
+          <ion-col>{{att.AT_DATE | date:'yyyy/MM/dd'}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_WORK_DURATION)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_WORK)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_ABSENT)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_OVERTIME)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_DUTY_OVERTIME)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_BREAK)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_DUTIES)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_EXCUSE)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_ROW_BEGIN_LATE)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_ROW_OUT_EARLY)}}</ion-col>
+          <ion-col>{{helper.ToHoursString(att.AT_TOTAL_GAP)}}</ion-col>
+
+
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+
+
+  <ion-card>
+
+      <ion-card-header>
     
-          <ion-item>
-            <ion-label>{{'From'|translate}}</ion-label>
-            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
-          </ion-item>
-    
-          <ion-item>
-            <ion-label>{{'To'|translate}}</ion-label>
-            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-    
-    
-    
-    
-    
-      <ion-list>
-        <ion-item>
-          <!-- <ion-thumbnail item-start>
-            <img class="image" src="/assets/img/blue.png">
-          </ion-thumbnail> -->
-          <h2>Ahmed Nagy</h2>
-          <p>Sun - Thu</p>
-          <button ion-button clear item-end (click)="AttendanceDetails()">{{'Details'|translate}}</button>
-        </ion-item>
-    
-        <ion-item>
-          <!-- <ion-thumbnail item-start>
-              <img class="image" src="/assets/img/blue.png">
-            </ion-thumbnail> -->
-          <h2>Ahmed Nagy</h2>
-          <p>Sun - Thu</p>
-          <button ion-button clear item-end (click)="AttendanceDetails()">{{'Details'|translate}}</button>
-        </ion-item>
-    
-    
-        <ion-item>
-          <!-- <ion-thumbnail item-start>
-                <img class="image" src="/assets/img/blue.png">
-              </ion-thumbnail> -->
-          <h2>Ahmed Nagy</h2>
-          <p>Sun - Thu</p>
-          <button ion-button clear item-end (click)="AttendanceDetails()">{{'Details'|translate}}</button>
-        </ion-item>
-    
-    
-    
-        <ion-item>
-          <!-- <ion-thumbnail item-start>
-                  <img class="image" src="/assets/img/blue.png">
-                </ion-thumbnail> -->
-          <h2>Ahmed Nagy</h2>
-          <p>Sun - Thu</p>
-          <button ion-button clear item-end (click)="AttendanceDetails()">{{'Details'|translate}}</button>
-        </ion-item>
-    
-    
-        <ion-item>
-          <!-- <ion-thumbnail item-start>
-                    <img class="image" src="/assets/img/blue.png">
-                  </ion-thumbnail> -->
-          <h2>Ahmed Nagy</h2>
-          <p>Sun - Thu</p>
-          <button ion-button clear item-end (click)="AttendanceDetails()">{{'Details'|translate}}</button>
-        </ion-item>
-    
-    
-        <ion-item>
-          <!-- <ion-thumbnail item-start>
-                      <img class="image" src="/assets/img/blue.png">
-                    </ion-thumbnail> -->
-          <h2>Ahmed Nagy</h2>
-          <p>Sun - Thu</p>
-          <button ion-button clear item-end (click)="AttendanceDetails()">{{'Details'|translate}}</button>
-        </ion-item>
-    
-    
-    
-      </ion-list>
+          <ion-grid>
+            <ion-row nowrap>
+              <ion-col col-10>Totals</ion-col>
+              <ion-col col-2>
+                <!-- <button ion-fab mini (click)="refreshPunches()">
+                  <ion-icon name="refresh" color="green"></ion-icon>
+                </button> -->
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-header>
+
+    <ion-card>
+      <ion-grid>
+        <ion-row nowrap>
+          Reg. Hrs: {{helper.ToHoursString(Totals.RegHoursTotal)}}
+        </ion-row>
+        <ion-row nowrap>
+          Work: {{helper.ToHoursString(Totals.WorkHoursTotal)}}
+        </ion-row>
+        <ion-row nowrap>
+          Absent: {{helper.ToHoursString(Totals.AbsentTotal)}}
+        </ion-row>
+        <ion-row nowrap>
+          O.T : {{helper.ToHoursString(Totals.OTTotal)}}
+        </ion-row>
+        <ion-row nowrap>
+          Duties O.T : {{helper.ToHoursString(Totals.DutiesOTTotal)}}
+        </ion-row>
+        <ion-row nowrap>
+          Break : {{helper.ToHoursString(Totals.BreakTotal)}}
+        </ion-row>
+        <ion-row nowrap>
+          Duties : {{helper.ToHoursString(Totals.DuitesTotal)}}
+        </ion-row>
+        <ion-row nowrap>
+          Excuse : {{helper.ToHoursString(Totals.ExecusesTotal)}}
+        </ion-row>
+        <ion-row nowrap>
+          Begin Late : {{helper.ToHoursString(Totals.BeginLateTotal)}}
+        </ion-row>
+        <ion-row nowrap>
+          Out Early : {{helper.ToHoursString(Totals.OutEarlyTotal)}}
+        </ion-row>
+        <ion-row nowrap>
+          Gap : {{helper.ToHoursString(Totals.GapTotal)}}
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+
+  </ion-card>
+
+
+  <!-- 
+  <ion-list>
+
+    <ion-item *ngFor="let att of AttendanceTab">
+      <h2>{{att.AT_DATE | date:'yyyy/MM/dd' }}</h2>
+   
+      <button ion-button clear item-end (click)="AttendanceDetails()">{{'Details'|translate}}</button>
+    </ion-item>
+
+  </ion-list> -->
+
+
 </ion-content>

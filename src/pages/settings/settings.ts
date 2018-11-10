@@ -11,6 +11,7 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { config } from '../../providers/Config';
 import { Storage } from '@ionic/storage';
 import { Heplers } from '../../providers/Helper/Helpers';
+import { Platform } from 'ionic-angular';
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -27,7 +28,7 @@ export class SettingsPage {
   options: any;
   MainURL: string;
   settingItem: { mainurl: string } = {
-    mainurl: 'test@example.com'
+    mainurl: ''
 
   };
 
@@ -54,10 +55,10 @@ export class SettingsPage {
     public translate: TranslateService,
     private qrScanner: QRScanner,
     private file: File,
-    public alertCtrl: AlertController, public helper: Heplers, public config: config, public storage: Storage
-  ) {
-
-    this.storage.get(this.config.MainURL_Key).then(res => this.settingItem.mainurl = res);
+    public platform: Platform,
+    public alertCtrl: AlertController, public helper: Heplers, public Config: config, public storage: Storage) {
+  
+    this.storage.get(this.Config.MainURL_Key).then(res => this.settingItem.mainurl = res);
 
   }
 
@@ -89,30 +90,30 @@ export class SettingsPage {
 
   scanServiceURL() {
     this.qrScanner.prepare()
-    .then((status: QRScannerStatus) => {
-       if (status.authorized) {
-         // camera permission was granted
-  
-         this.helper.showMessage("Authorized",'Error is');
-         // start scanning
-         let scanSub = this.qrScanner.scan().subscribe((text: string) => {
-           console.log('Scanned something', text);
-  
-           this.qrScanner.hide(); // hide camera preview
-           scanSub.unsubscribe(); // stop scanning
-         });
-         this.qrScanner.show();
-  
-       } else if (status.denied) {
-        this.helper.showMessage("Denied",'Error is');
-         // camera permission was permanently denied
-         // you must use QRScanner.openSettings() method to guide the user to the settings page
-         // then they can grant the permission from there
-       } else {
-         // permission was denied, but not permanently. You can ask for permission again at a later time.
-       }
-    })
-    .catch((e: any) => this.helper.showMessage(e,'Error is'));
+      .then((status: QRScannerStatus) => {
+        if (status.authorized) {
+          // camera permission was granted
+
+          this.helper.showMessage("Authorized", 'Error is');
+          // start scanning
+          let scanSub = this.qrScanner.scan().subscribe((text: string) => {
+            console.log('Scanned something', text);
+
+            this.qrScanner.hide(); // hide camera preview
+            scanSub.unsubscribe(); // stop scanning
+          });
+          this.qrScanner.show();
+
+        } else if (status.denied) {
+          this.helper.showMessage("Denied", 'Error is');
+          // camera permission was permanently denied
+          // you must use QRScanner.openSettings() method to guide the user to the settings page
+          // then they can grant the permission from there
+        } else {
+          // permission was denied, but not permanently. You can ask for permission again at a later time.
+        }
+      })
+      .catch((e: any) => this.helper.showMessage(e, 'Error is'));
   }
 
   ionViewDidLoad() {
@@ -138,12 +139,32 @@ export class SettingsPage {
       this._buildForm();
     });
   }
+
+
   saveSettings() {
-    debugger;
-    var temp2222=this.config.MainURL_Key;
-    let temp = this.settingItem.mainurl;
-    this.storage.set(this.config.MainURL_Key, this.settingItem.mainurl);
-    this.navCtrl.push('WelcomePage');
+    //debugger;
+    //var temp2222=this.config.MainURL_Key;
+    //  let temp = this.settingItem.mainurl;
+    //this.storage.remove(this.config.MainURL_Key); 
+    this.helper.presentToast("Please Wait While Saving changes then restart application.....", 8000);
+    this.storage.set(this.Config.MainURL_Key, this.settingItem.mainurl);
+    setTimeout(() => {
+      this.platform.exitApp();
+       // this.navCtrl.setRoot('WelcomePage');
+      // this.navCtrl.push('WelcomePage');
+      //this.storage.get(this.config.MainURL_Key).then(res=> console.log('Main URL VAlue', res)); 
+    }, 9000);
+
+    //this.storage.get(this.config.MainURL_Key).then(res=> console.log('Main URL VAlue', res));
+    //window.location.reload();
+    // this.navCtrl.push('WelcomePage')
+    //this.navCtrl.setRoot('WelcomePage');
+
+    // window.location.reload()
+
+
+
+
     //debugger;
     //this.file.writeFile(this.file.dataDirectory, "SettingFile",this.settingItem.mainurl);
     //this.file.createFile(this.file.dataDirectory, "SettingFile",true);

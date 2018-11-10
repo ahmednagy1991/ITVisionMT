@@ -5,14 +5,15 @@
   Ionic pages and navigation.
 -->
 <link href="assets/CustomStyles/TableStyle.css" rel="stylesheet">
+
 <ion-header>
 
   <ion-navbar>
-    
+
     <ion-title>Dashboard</ion-title>
     <button ion-button menuToggle icon-only>
-        <ion-icon name='menu'></ion-icon>
-      </button>
+      <ion-icon name='menu'></ion-icon>
+    </button>
   </ion-navbar>
 
 </ion-header>
@@ -20,13 +21,24 @@
 
 <ion-content padding>
 
- 
+<!-- <button (click)="LoadTTFormat()">GetFormat</button> -->
 
   <ion-card>
     <ion-card-header>
       {{'AttendanceSummary'|translate}}
     </ion-card-header>
     <ion-card-content>
+      <ion-item class="item-leave-height">
+        <ion-label>Days Statistics</ion-label>
+        <!--  -->
+        <ion-select [(ngModel)]="Peroid" name="Peroid" (ionChange)="ReloadChart()">
+          <ion-option value="0">Today</ion-option>
+          <ion-option value="1">Yesterday</ion-option>
+          <ion-option value="29">Last 30 Days</ion-option>
+          <ion-option value="6">Last 7 Days</ion-option>
+        </ion-select>
+      </ion-item>
+
       <canvas #doughnutCanvas></canvas>
     </ion-card-content>
   </ion-card>
@@ -36,150 +48,272 @@
 
   <ion-card>
     <ion-card-header>
-      {{'TimeTable'|translate}}
+      Statistical Information
     </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <div>
+          <ion-row nowrap class="ro">Working Days : {{attSummary.workingDays}} ({{attSummary.workingDays_Per | number:'1.2-2' }} %)</ion-row>
+          <ion-row nowrap class="ro">Worked Days : {{attSummary.workedDays}} ({{attSummary.workedDays_Per | number:'1.2-2' }} %)</ion-row>
+          <ion-row nowrap class="ro">Worked With Delay : {{attSummary.workedWithDelay}} ({{attSummary.workedWithDelay_Per | number:'1.2-2' }} %)</ion-row>
+          <ion-row nowrap class="ro">Absent : {{attSummary.absent}} ({{attSummary.absent_Per | number:'1.2-2' }} %)</ion-row>
+          <ion-row nowrap class="ro">Absent With Duity: {{attSummary.absentWithDuity}} ({{attSummary.absentWithDuity_Per | number:'1.2-2' }} %)</ion-row>
+          <ion-row nowrap class="ro">Vac Days : {{attSummary.VacDays}} ({{attSummary.VacDays_Per | number:'1.2-2' }} %)</ion-row>
+          <ion-row nowrap class="ro">Off Days : {{attSummary.OffDays}} ({{attSummary.OffDays_Per | number:'1.2-2' }} %)</ion-row>
+          <ion-row nowrap class="ro">No T.T : {{attSummary.NoTT}} ({{attSummary.NoTT_Per | number:'1.2-2' }} %)</ion-row>
+        </div>
 
-    <div style="overflow-x:auto;">
-      <table>
-        <tr>
-          <th>First name</th>
-          <th>Last name</th>
-          <th>Birthdate</th>
-          <th>Balance</th>
-          <th>Email</th>
-        </tr>
-        <tr>
-          <td>Ahmed</td>
-          <td>Nagy</td>
-          <td>07-07-1991</td>
-          <td>159</td>
-          <td>ahmed.nagy3993@gmail.com</td>
-        </tr>
-        <tr>
-          <td>Ahmed</td>
-          <td>Nagy</td>
-          <td>07-07-1991</td>
-          <td>159</td>
-          <td>ahmed.nagy3993@gmail.com</td>
-        </tr>
-        <tr>
-          <td>Ahmed</td>
-          <td>Nagy</td>
-          <td>07-07-1991</td>
-          <td>159</td>
-          <td>ahmed.nagy3993@gmail.com</td>
-        </tr>
-        <tr>
-          <td>Ahmed</td>
-          <td>Nagy</td>
-          <td>07-07-1991</td>
-          <td>159</td>
-          <td>ahmed.nagy3993@gmail.com</td>
-        </tr>
+      </ion-grid>
 
-      </table>
-    </div>
-  </ion-card>
-
-
-  <ion-card>
-    <ion-card-header>
-      {{'Attendance'|translate}}
-    </ion-card-header>
-
-    <div style="overflow-x:auto;">
-      <table>
-        <tr>
-          <th>First name</th>
-          <th>Last name</th>
-          <th>Birthdate</th>
-          <th>Balance</th>
-          <th>Email</th>
-        </tr>
-        <tr>
-          <td>Ahmed</td>
-          <td>Nagy</td>
-          <td>07-07-1991</td>
-          <td>159</td>
-          <td>ahmed.nagy3993@gmail.com</td>
-        </tr>
-        <tr>
-          <td>Ahmed</td>
-          <td>Nagy</td>
-          <td>07-07-1991</td>
-          <td>159</td>
-          <td>ahmed.nagy3993@gmail.com</td>
-        </tr>
-        <tr>
-          <td>Ahmed</td>
-          <td>Nagy</td>
-          <td>07-07-1991</td>
-          <td>159</td>
-          <td>ahmed.nagy3993@gmail.com</td>
-        </tr>
-        <tr>
-          <td>Ahmed</td>
-          <td>Nagy</td>
-          <td>07-07-1991</td>
-          <td>159</td>
-          <td>ahmed.nagy3993@gmail.com</td>
-        </tr>
-
-      </table>
-    </div>
+    </ion-card-content>
   </ion-card>
 
 
 
+  <div padding>
+    <ion-segment [(ngModel)]="CurrentTab">
+      <ion-segment-button value="TimeTable">
+        Time Table
+      </ion-segment-button>
+      <ion-segment-button value="Attendance">
+        Attendance
+      </ion-segment-button>
+      <ion-segment-button value="Punches">
+        My Punches
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="CurrentTab">
+    <ion-item *ngSwitchCase="'TimeTable'">
+      <ion-list>
+        <ion-item *ngFor="let att of TTListModel">
+          <div [ngClass]="att.TT_STATE==2 ? 'GreenBackGround': ''">
+            <h2>Time Table On : {{att.TT_DATE | date:'yyyy/MM/dd'}}</h2>
+            <h3>From Time: {{att.FROM_DATE_TIME | date:'HH:mm'}} To Time : {{att.TO_DATE_TIME | date:'HH:mm'}}</h3>
+            <p>{{helper.GetTimeTableState(att.TT_STATE)}}</p>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ion-item>
+
+
+    <ion-item *ngSwitchCase="'Attendance'">
+
+      <ion-list>
+        <ion-item *ngFor="let att of AttendanceTab">
+          <h2>Attendance Summary On : {{att.AT_DATE | date:'yyyy/MM/dd'}}</h2>
+          <h3></h3>
+          <p>Reg.HRS : {{helper.ToHoursString(att.AT_TOTAL_WORK_DURATION)}}</p>
+          <p>Absent : {{helper.ToHoursString(att.AT_TOTAL_ABSENT)}}</p>
+          <p>Overtime : {{helper.ToHoursString(att.AT_TOTAL_OVERTIME)}}</p>
+          <p>Duties Overtime : {{helper.ToHoursString(att.AT_TOTAL_DUTY_OVERTIME)}}</p>
+          <p>Break : {{helper.ToHoursString(att.AT_TOTAL_DUTY_OVERTIME)}}</p>
+          <p>Duties : {{helper.ToHoursString(att.AT_TOTAL_DUTIES)}}</p>
+          <p>Excuse : {{helper.ToHoursString(att.AT_TOTAL_EXCUSE)}}</p>          
+        </ion-item>
+      </ion-list>
+
+      <!-- <div style="overflow-x:auto;">
+
+              <ion-grid>
+                <ion-row nowrap>
+        
+                  <ion-col class="thro">DATE</ion-col>
+                  <ion-col class="thro">Reg.HRS</ion-col>
+                  <ion-col class="thro">Work</ion-col>
+                  <ion-col class="thro">Absent</ion-col>
+                  <ion-col class="thro">O.T</ion-col>
+                  <ion-col class="thro">Duties O.T</ion-col>
+                  <ion-col class="thro">Break</ion-col>
+                  <ion-col class="thro">Duties</ion-col>
+                  <ion-col class="thro">Excuse</ion-col>
+           
+                </ion-row>
+        
+                <ion-row nowrap *ngFor="let att of AttendanceTab" class="ro">
+                  <ion-col>{{att.AT_DATE | date:'yyyy/MM/dd'}}</ion-col>
+                  <ion-col>{{helper.ToHoursString(att.AT_TOTAL_WORK_DURATION)}}</ion-col>
+
+                  <ion-col>{{helper.ToHoursString(att.AT_TOTAL_WORK)}}</ion-col>
+                  <ion-col>{{helper.ToHoursString(att.AT_TOTAL_ABSENT)}}</ion-col>
+                  <ion-col>{{helper.ToHoursString(att.AT_TOTAL_OVERTIME)}}</ion-col>
+                  <ion-col>{{helper.ToHoursString(att.AT_TOTAL_DUTY_OVERTIME)}}</ion-col>
+                  <ion-col>{{helper.ToHoursString(att.AT_TOTAL_DUTY_OVERTIME)}}</ion-col>
+                  <ion-col>{{helper.ToHoursString(att.AT_TOTAL_DUTIES)}}</ion-col>
+                  <ion-col>{{helper.ToHoursString(att.AT_TOTAL_EXCUSE)}}</ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+            -->
+    </ion-item>
+    <ion-item *ngSwitchCase="'Punches'">
+
+        <ion-list>
+            <ion-item *ngFor="let att of PunchTable">
+             
+                <h2>My Punches On : {{att.PUNCH_DATETIME  | date:'yyyy/MM/dd'}}</h2>
+                <h3></h3>
+                <p>Punch Type : {{helper.getPunchType(att.PUNCH_TYPE)}}</p>
+                <p>Reader : {{att.READER_NAME}} </p>
+                <!-- <p>status : {{att.PROCESS_STATUS}} </p>
+                <p>process : {{att.PROCESS_STATUS}} </p>
+                <p>entry : {{att.ENTRY_TYPE}} </p> -->
+            </ion-item>
+          </ion-list>
+
+      <!-- <div style="overflow-x:auto;">
+
+        <ion-grid>
+          <ion-row nowrap class="ro">
+
+
+            <ion-col class="thro">Date</ion-col>
+            <ion-col class="thro">Type</ion-col>
+            <ion-col class="thro">Reader</ion-col>
+            <ion-col class="thro">status</ion-col>
+            <ion-col class="thro">process</ion-col>
+            <ion-col class="thro">entry</ion-col>
+
+          </ion-row>
+
+          <ion-row nowrap *ngFor="let att of PunchTable" class="ro">
+            <ion-col>{{att.PUNCH_DATETIME}}</ion-col>
+            <ion-col>{{helper.getPunchType(att.PUNCH_TYPE)}}</ion-col>
+            <ion-col>{{att.READER_NAME}}</ion-col>
+            <ion-col>{{att.PROCESS_STATUS}}</ion-col>
+            <ion-col>{{att.PROCESS_STATUS}}</ion-col>
+            <ion-col>{{att.ENTRY_TYPE}}</ion-col>
+          </ion-row>
+
+        </ion-grid>
+      </div> -->
+    </ion-item>
+  </div>
+
+
+
+
+  <!-- <div padding >
+    <ion-segment [ngModel]="CurrentTab">
+      <ion-segment-button value="TimeTable">
+        Time Table
+      </ion-segment-button>
+      <ion-segment-button value="Attendance">
+        Attendance
+      </ion-segment-button>
+      <ion-segment-button value="MyPunches">
+        MyPunches
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+
+  <div [ngSwitch]="CurrentTab">
+    <ion-item *ngSwitchCase="'TimeTable'">
+      TimeTable
+    </ion-item>
+  
+    <ion-list *ngSwitchCase="'Attendance'">
+      <ion-item>
+       Attendance
+      </ion-item>
+     
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'MyPunches'">
+      <ion-item>
+       MyPunches
+      </ion-item>
+     
+    </ion-list>
+
+
+  </div> -->
+
+
+
+
 
 
 
   <ion-card>
-      <ion-card-header>
-        {{'TodayPunches'|translate}}
-      </ion-card-header>
-  
-      <div style="overflow-x:auto;">
-        <table>
-          <tr>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Birthdate</th>
-            <th>Balance</th>
-            <th>Email</th>
-          </tr>
-          <tr>
-            <td>Ahmed</td>
-            <td>Nagy</td>
-            <td>07-07-1991</td>
-            <td>159</td>
-            <td>ahmed.nagy3993@gmail.com</td>
-          </tr>
-          <tr>
-            <td>Ahmed</td>
-            <td>Nagy</td>
-            <td>07-07-1991</td>
-            <td>159</td>
-            <td>ahmed.nagy3993@gmail.com</td>
-          </tr>
-          <tr>
-            <td>Ahmed</td>
-            <td>Nagy</td>
-            <td>07-07-1991</td>
-            <td>159</td>
-            <td>ahmed.nagy3993@gmail.com</td>
-          </tr>
-          <tr>
-            <td>Ahmed</td>
-            <td>Nagy</td>
-            <td>07-07-1991</td>
-            <td>159</td>
-            <td>ahmed.nagy3993@gmail.com</td>
-          </tr>
-  
-        </table>
-      </div>
-    </ion-card>
+    <!-- <ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-10>{{'TimeTable'|translate}}</ion-col>        
+        </ion-row>
+      </ion-grid>
+    </ion-card-header> -->
+
+
+
+
+
+
+    <!-- <div style="overflow-x:auto;">
+
+      <ion-grid>
+        <ion-row>
+
+          <ion-col class="thro">DATE </ion-col>
+          <ion-col class="thro">To work </ion-col>
+          <ion-col class="thro">From Time </ion-col>
+          <ion-col class="thro">To Time </ion-col>
+
+        </ion-row>
+
+        <ion-row *ngFor="let att of TTListModel" class="ro">
+          <ion-col>{{att.TT_DATE | date:'yyyy/MM/dd'}}</ion-col>
+          <ion-col>{{att.FROM_DATE_TIME | date:'yyyy/MM/dd'}}</ion-col>
+          <ion-col>{{att.TO_DATE_TIME | date:'yyyy/MM/dd'}}</ion-col>
+          <ion-col>{{att.TT_STATE}}</ion-col>
+
+        </ion-row>
+      </ion-grid>
+    </div> -->
+
+
+  </ion-card>
+
+
+  <ion-card>
+    <!-- <ion-card-header>
+
+      <ion-grid>
+        <ion-row nowrap>
+          <ion-col col-10>{{'Attendance'|translate}}</ion-col>
+          <ion-col col-2>
+         
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header> -->
+
+
+  </ion-card>
+
+
+
+
+
+
+
+  <ion-card>
+    <!-- <ion-card-header>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col col-10> {{'TodayPunches'|translate}}</ion-col>
+          <ion-col col-2>
+        
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header> -->
+
+
+  </ion-card>
 
   <!-- 
     <table st-table="rowCollection" class="table table-striped">

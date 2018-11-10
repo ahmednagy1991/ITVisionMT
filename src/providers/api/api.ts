@@ -10,67 +10,28 @@ import { Heplers } from '../../providers/Helper/Helpers';
  */
 @Injectable()
 export class Api {
-  //https://example.com/api/v1
-  url: string = 'http://localhost:24741/api/values/';
+  // url: string = 'http://localhost:24741/api/values/';
+  url: string;
+
   data: any;
   playlist: any;
   newsitems: any;
 
   constructor(public http: HttpClient, public httpclient: Http, public helper: Heplers, public config: config, public storage: Storage) {
+
     this.storage.get(this.config.MainURL_Key).then(res => this.url = res)
       .catch(err => helper.showMessage(err, "Error"));
 
+
+    //this.storage.get(this.config.MainURL_Key).then(res => this.url = res)
+
   }
 
-  callGet(endpoint: string, params?: any, reqOpts?: any) {
-    debugger;
+  callGet(endpoint: string, body: string, params?: any, reqOpts?: any) {
 
     let headers = new Headers();
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-    headers.append('Accept', 'application/json');
-    headers.append('content-type', 'application/json');
+    return this.http.post(this.url + '/' + endpoint, body)
 
-    return this.http.post(endpoint, { headers: headers })
-      .map(response => {
-        //this.data = response.json();
-        debugger;
-        return (this.data);
-      })
-
-    // var headers = new Headers();
-    // headers.append('Access-Control-Allow-Origin' , '*');
-    // headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-    // headers.append('Accept','application/json');
-    // headers.append('content-type','application/json');
-
-
-
-    // if (!reqOpts) {
-    //   reqOpts = {
-    //     params: new HttpParams(),
-    //     headers:headers
-    //   };
-    // }
-
-    // // Support easy query params for GET requests
-    // if (params) {
-    //   reqOpts.params = new HttpParams();
-    //   for (let k in params) {
-    //     reqOpts.params = reqOpts.params.set(k, params[k]);
-    //   }
-    //  }
-
-    //return this.http.post(this.url + '/' + endpoint,reqOpts);
-    // return new Promise(resolve => {
-    //   this.http.get(this.url + '/' + endpoint,reqOpts).subscribe(data => {
-    //     //debugger;
-    //     //resolve(data);
-    //   }, err => {
-    //    // debugger;
-    //     console.log(err);
-    //   });
-    // });
   }
 
 

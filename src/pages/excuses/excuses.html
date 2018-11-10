@@ -8,11 +8,67 @@
 
   <ion-navbar>
     <ion-title>Excuses</ion-title>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-card>
+    <ion-card-content>
+
+      <ion-item>
+        <ion-label>From</ion-label>
+        <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="dateComp.from"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>To</ion-label>
+        <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="dateComp.to"></ion-datetime>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <button ion-button full (click)="LoadExecuses()">View Execuses</button>
+
+
+  <div style="overflow-x:auto;">
+
+
+
+
+      <ion-card>
+         
+  
+        <ion-grid>
+          <ion-row nowrap>
+  
+            <ion-col class="thro">Execuse ID</ion-col>
+            <ion-col class="thro">Excuses Description</ion-col>
+            <ion-col class="thro"></ion-col>
+            <!-- <ion-col class="thro">From</ion-col>
+                <ion-col class="thro">To</ion-col>             -->
+            <!--  -->
+          </ion-row>
+  
+          <ion-row nowrap *ngFor="let lev of exList" class="ro">
+            <ion-col>{{lev.LV_ID}}</ion-col>
+            <ion-col>{{lev.LV_TITLE}}</ion-col>
+            <ion-col>
+              <!-- <button ion-button full (click)="GetLeaves(lev.LV_ID)">Details</button> -->
+            </ion-col>
+          
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </div>
+  
+
+      
+
+
+
 
 </ion-content>

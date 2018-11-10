@@ -1,17 +1,34 @@
 <ion-content scroll="false">
-  <div class="splash-bg"></div>
+  <div class="splash-bg">
+
+    <div class="login-html">
+
+      <!-- <div class="login-form">
+        <h1 style="color:white">IVision MT v5</h1>
+      </div> -->
+     
+
+      <div padding class="buttomButton">
+        <button [disabled]="! enableLogin" ion-button round block (click)="signup()">{{ 'SIGNUP' | translate }}</button>
+        <button [disabled]="! enableLogin" ion-button round block (click)="login()" class="login">{{ 'LOGIN' | translate }}</button>
+
+      </div>
+      <ion-fab right bottom>
+        <button ion-fab (click)="settings()" color="light">
+          <ion-icon name="settings"></ion-icon>
+        </button>
+      </ion-fab>
+    </div>
+  </div>
+
+
+
+  <!--   
   <div class="splash-info">
     <div class="splash-logo"></div>
     <div class="splash-intro">
       {{ 'WELCOME_INTRO' | translate }}
     </div>
-  </div>
-  <div padding>
-    <button  [disabled]="! enableLogin" ion-button round block (click)="signup()">{{ 'SIGNUP' | translate }}</button>
-    <button  [disabled]="! enableLogin" ion-button round block (click)="login()" class="login">{{ 'LOGIN' | translate }}</button>
-  
-  </div>
-  <ion-fab right bottom>
-      <button ion-fab (click)="settings()" color="light"><ion-icon name="settings"></ion-icon></button>     
-    </ion-fab>
+  </div> -->
+
 </ion-content>

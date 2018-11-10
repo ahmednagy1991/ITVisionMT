@@ -8,11 +8,72 @@
 
   <ion-navbar>
     <ion-title>SubmitExecuse</ion-title>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <form (submit)="submitExecuse()">
 
+    <!-- <ion-item>
+      <ion-label fixed>Execuse Date</ion-label>
+      <ion-input type="text" [(ngModel)]="excModel.excuse_date" name="excuse_date"></ion-input>
+    </ion-item> -->
+
+
+    <ion-item>
+        <ion-label>Execuse Date</ion-label>
+        <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="excModel.excuse_date" name="excuse_date"></ion-datetime>
+      </ion-item>
+
+
+
+    <ion-item>
+      <ion-label>From Time</ion-label>
+      <ion-datetime displayFormat="HH:MM" [(ngModel)]="excModel.from_time" name="from_time"></ion-datetime>
+    </ion-item>
+
+
+
+    <ion-item>
+      <ion-label>To Time</ion-label>
+      <ion-datetime displayFormat="HH:MM" [(ngModel)]="excModel.to_time" name="to_time"></ion-datetime>
+    </ion-item>
+
+
+    <ion-item class="item-leave-height">
+      <ion-label>Pay Status</ion-label>
+      <ion-select [(ngModel)]="excModel.pay_status" name="pay_status">
+        <ion-option value="0">Paid</ion-option>
+        <ion-option value="1">Unpaid</ion-option>
+      </ion-select>
+    </ion-item>
+
+
+    <ion-item class="item-leave-height">
+      <ion-label>Reasons</ion-label>
+      <ion-select [(ngModel)]="excModel.reason_id" name="reason_id">
+        <ion-option *ngFor="let item of resons" value="{{item.reason_id}}">{{item.reason}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label fixed>Description</ion-label>
+      <ion-input type="text" [(ngModel)]="excModel.desc" name="desc"></ion-input>
+    </ion-item>
+
+
+
+
+    <div padding>
+      <button ion-button round color="primary" block>submit</button>
+    </div>
+
+
+  </form>
 </ion-content>

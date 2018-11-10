@@ -7,17 +7,21 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="msapplication-tap-highlight" content="no">
 
+  <link href="CustomeStyles/LoginStyle.css" rel="stylesheet">
+ 
   <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#4e8ef7">
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkcD1poGSDHoHf8HwQRbCCYI5KQAhBQno"></script>
+  <meta name="theme-color" content="#4F24AC">
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>  -->
+  
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key="></script> -->
   <!-- add to homescreen for ios -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <script src="path/to/qrscanner/library.bundle.min.js"></script>
+  <!-- <script src="path/to/qrscanner/library.bundle.min.js"></script> -->
   <!-- cordova.js required for cordova apps (remove if not needed) -->
   <script src="cordova.js"></script>
- 
+  <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?branch=experimental' async defer></script>
   <!-- un-comment this code to enable service worker
   <script>
     if ('serviceWorker' in navigator) {
@@ -26,14 +30,21 @@
         .catch(err => console.error('Error', err));
     }
   </script>-->
-  
+
   <link href="build/main.css" rel="stylesheet">
+  
 
 </head>
 <body>
-
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMT4rShOPydSz3IMBOeVa0m1BTuUyB5Pc"></script>
   <!-- Ionic's root component and where the app will load -->
   <ion-app></ion-app>
+
+
+  <!-- <script>
+    System.import('app').catch(function(err){ console.error(err); });
+  </script> -->
+
 
   <!-- The polyfills js is generated during the build process -->
   <script src="build/polyfills.js"></script>

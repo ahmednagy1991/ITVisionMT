@@ -3,11 +3,23 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class config {
-    public MainURL_Key: "MainURl";
-    public Username_Key: "Username";
-    public Password_Key: "Password";
-    public UUID_Key: "UUDI";
-    public CurrentEmpID: "";
+    public MainURL_Key:string;
+    public Username_Key: string;
+    public Password_Key: string;
+    public UUID_Key: string;
+    public ConnectionParameter:string="ConnPar";
+    public UserInformation:string="UserInf";
+    static CurrentUsername:string="";
+    static CurrentPassword:string="";
+    public CurrentEmpID: string;
+    public APIToken: string="Token";
+    //static APIKEY:"8b50486998244ae4965678671206bbf3";
+    static APIKEY:string="8b50486998244ae4965678671206bbf3";
+    public EmployeeName_Key:string;
+    public EmployeeDepartment_Key:string;
+    public EmployeeOrganization_Key:string;
+    static EmpID:string;
+    static MainURLValue:string="";
 
     //Settings: Array<string> = [this.MainURL_Key, this.Username_Key, this.Password_Key];
 
@@ -19,7 +31,14 @@ export class config {
         this.Username_Key = "Username";
         this.Password_Key = "Password";
         this.UUID_Key = "UUDI";
+        //this.EmpID="";
+        
         this.CurrentEmpID = "";
+       // this.APIToken= "";
+        //this.APIKEY="8b50486998244ae4965678671206bbf3";
+        this.EmployeeName_Key="EmpName";
+        this.EmployeeDepartment_Key="EmpDep";
+        this.EmployeeOrganization_Key="EmpOrg";
 
     }
 

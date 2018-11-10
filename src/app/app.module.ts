@@ -9,13 +9,26 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 // import { Http,Headers } from '@angular/http';
-import {HttpModule} from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
 import { Device } from '@ionic-native/device';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { Globalization } from '@ionic-native/globalization';
-
+import { AttendanceService } from '../Services/AttendanceService'
+import { DecimalPipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
+import { PunchesService } from '../Services/PunchesService';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { LeavesService } from '../Services/LeavesService';
+import { TimeTableService } from '../Services/TimeTableService';
+import { ExecuseService } from '../Services/ExecuseService';
+import { RequestService } from '../Services/RequestService';
+import { HelperService } from '../Services/HelperService';
+import { UserService } from '../Services/UserService';
+import { ModalContentPage } from '../pages/leaves/leaves';
+import { ModalTimTablePage } from '../pages/time-table/time-table';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import {
   GoogleMaps,
@@ -56,12 +69,18 @@ export function provideSettings(storage: Storage) {
 
 @NgModule({
   declarations: [
-    MyApp
+    MyApp,
+    ModalContentPage,
+    ModalTimTablePage
   ],
+  schemas:[
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
+
   imports: [
     BrowserModule,
     HttpModule,
-    HttpClientModule,    
+    HttpClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -74,15 +93,28 @@ export function provideSettings(storage: Storage) {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp
+    MyApp,
+    ModalContentPage,
+    ModalTimTablePage
   ],
   providers: [
     Api,
     Items,
     QRScanner,
+    DecimalPipe,
+    DatePipe,
     User,
+    AttendanceService,
+    AndroidPermissions,
+    PunchesService,
+    LeavesService,
     Geolocation,
-   // Http,
+    TimeTableService,
+    ExecuseService,
+    RequestService,
+    HelperService,
+    UserService,
+    // Http,
     File,
     config,
     Globalization,
@@ -90,7 +122,7 @@ export function provideSettings(storage: Storage) {
     Camera,
     Device,
     NativeGeocoder,
-    SplashScreen,   
+    SplashScreen,
     GoogleMaps,
     StatusBar,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },

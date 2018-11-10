@@ -4,6 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMT4rShOPydSz3IMBOeVa0m1BTuUyB5Pc"></script>
 <style>
   #mapss {
     height: 50%;
@@ -13,12 +14,16 @@
 
   <ion-navbar>
     <ion-title>Geo Punching</ion-title>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+   
   <div #map id="mapss"></div>
  
   <ion-grid *ngIf="enablePunchingButtons">
@@ -26,23 +31,23 @@
       <ion-card>
           <ion-card-content>
               <!-- <p> {{CurrentAddress}}</p> -->
-
+<!-- 
               <p>Country Code : {{Address.countryCode}}</p>
               <p>Country Name : {{Address.countryName}}</p>
               <p>Administrative Area : {{Address.administrativeArea}}</p>
               <p>Sub Administrative Area : {{Address.subAdministrativeArea}}</p>
               <p>Locality : {{Address.locality}}</p>
-              <p>Thotoughfare : {{Address.thoroughfare}}</p>
+              <p>Thotoughfare : {{Address.thoroughfare}}</p> -->
               <!-- <p>Cuurent Time: {{CurrentTime}}</p> -->
             </ion-card-content>       
       </ion-card>
     </ion-row>
     <ion-row>
       <ion-col col-6>
-        <button ion-button color="secondary" round block>Punch In</button>
+        <button ion-button color="secondary" round block (click)="punchIn()">Punch In</button>
       </ion-col>
       <ion-col col-6>
-        <button ion-button color="danger" round block>Punch Out</button>
+        <button ion-button color="danger" round block (click)="punchIn()">Punch Out</button>
       </ion-col>
     </ion-row>
     <ion-row>

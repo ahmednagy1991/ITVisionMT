@@ -18,6 +18,9 @@
 
   <ion-navbar>
     <ion-title>TimeTable</ion-title>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
   </ion-navbar>
 
 </ion-header>
@@ -27,86 +30,88 @@
 
 
 
-  <ion-card>
-    <ion-card-content>
+    <ion-card>
+        <ion-card-content>
+    
+          <ion-item>
+            <ion-label>{{'From'|translate}}</ion-label>
+            <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="dateComp.from"></ion-datetime>
+          </ion-item>
+    
+          <ion-item>
+            <ion-label>{{'To'|translate}}</ion-label>
+            <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="dateComp.to"></ion-datetime>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+      <button ion-button full (click)="LoadTimeTable()">View Time Table</button>
 
-      <ion-item>
-        <ion-label>{{'From'|translate}}</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
-      </ion-item>
+      <ion-card>
+          <ion-card-header>
+            <ion-grid>
+              <ion-row>
+                <ion-col col-10>{{'TimeTable'|translate}}</ion-col>
+                <!-- <ion-col col-2>
+                  <button ion-fab mini (click)="refreshPunches()">
+                    <ion-icon name="refresh" color="green"></ion-icon>
+                  </button> -->
+      
+              </ion-row>
+            </ion-grid>
+          </ion-card-header>
+      
+          <div style="overflow-x:auto;">
+      
+            <ion-grid>
+              <ion-row>
+                <!-- <ion-col class="thro">TT_DATE </ion-col>
+                    <ion-col class="thro">FROM_DATE_TIME </ion-col>
+                    <ion-col class="thro">TO_DATE_TIME </ion-col>
+                    <ion-col class="thro">CT_TITLE </ion-col>
+                    <ion-col class="thro"> PG_TITLE</ion-col> -->
+                <ion-col class="thro">DATE </ion-col>
+                <ion-col class="thro">To work </ion-col>
+                <ion-col class="thro">From Time </ion-col>
+                <ion-col class="thro">To Time </ion-col>
+                <!-- <ion-col class="thro"> </ion-col> -->
+                <!-- <ion-col class="thro"> Calc.Type</ion-col>
+                <ion-col class="thro"> Policy Group</ion-col> -->
+                
+              </ion-row>
+      
+              <ion-row (click)="LoadTimeTableDetails(att.TT_ID)" *ngFor="let att of TTListModel" class="ro">
+               
+                    <ion-col>{{att.TT_DATE  | date:'yyyy/MM/dd'}}</ion-col>
+                    <ion-col>{{att.FROM_DATE_TIME  | date:'HH:mm'}}</ion-col>
+                    <ion-col>{{att.TO_DATE_TIME  | date:'HH:mm'}}</ion-col>
+                    <ion-col> {{helper.GetTTStatus(att.TT_STATE)}}</ion-col>
+                    <!-- <ion-col>
+                        <button ion-button full (click)="LoadTimeTableDetails(att.TT_ID)">Details</button>
+                    </ion-col> -->
+              
+               
+                
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ion-card>
 
-      <ion-item>
-        <ion-label>{{'To'|translate}}</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
+        <!-- <ion-card>
 
-
-
-
-
-  <ion-list>
-    <ion-item>
-      <!-- <ion-thumbnail item-start>
-        <img class="image" src="/assets/img/blue.png">
-      </ion-thumbnail> -->
-      <h2>Ahmed Nagy</h2>
-      <p>Sun - Thu</p>
-      <button ion-button clear item-end (click)="TimeTableDetails()">{{'Details'|translate}}</button>
-    </ion-item>
-
-    <ion-item>
-      <!-- <ion-thumbnail item-start>
-          <img class="image" src="/assets/img/blue.png">
-        </ion-thumbnail> -->
-      <h2>Ahmed Nagy</h2>
-      <p>Sun - Thu</p>
-      <button ion-button clear item-end (click)="TimeTableDetails()">{{'Details'|translate}}</button>
-    </ion-item>
-
-
-    <ion-item>
-      <!-- <ion-thumbnail item-start>
-            <img class="image" src="/assets/img/blue.png">
-          </ion-thumbnail> -->
-      <h2>Ahmed Nagy</h2>
-      <p>Sun - Thu</p>
-      <button ion-button clear item-end (click)="TimeTableDetails()">{{'Details'|translate}}</button>
-    </ion-item>
-
-
-
-    <ion-item>
-      <!-- <ion-thumbnail item-start>
-              <img class="image" src="/assets/img/blue.png">
-            </ion-thumbnail> -->
-      <h2>Ahmed Nagy</h2>
-      <p>Sun - Thu</p>
-      <button ion-button clear item-end (click)="TimeTableDetails()">{{'Details'|translate}}</button>
-    </ion-item>
-
-
-    <ion-item>
-      <!-- <ion-thumbnail item-start>
-                <img class="image" src="/assets/img/blue.png">
-              </ion-thumbnail> -->
-      <h2>Ahmed Nagy</h2>
-      <p>Sun - Thu</p>
-      <button ion-button clear item-end (click)="TimeTableDetails()">{{'Details'|translate}}</button>
-    </ion-item>
-
-
-    <ion-item>
-      <!-- <ion-thumbnail item-start>
-                  <img class="image" src="/assets/img/blue.png">
-                </ion-thumbnail> -->
-      <h2>Ahmed Nagy</h2>
-      <p>Sun - Thu</p>
-      <button ion-button clear item-end (click)="TimeTableDetails()">{{'Details'|translate}}</button>
-    </ion-item>
-
-
-
-  </ion-list>
+           
+      
+          <ion-grid>
+            <div>
+                <ion-row nowrap class="ro">Date : {{TTableModel.TT_DATE | date:'yyyy/MM/dd'}}</ion-row>
+                <ion-row nowrap class="ro">Reg. HRS : {{helper.ToHoursString(TTableModel.DURATION)}}</ion-row>
+                <ion-row nowrap class="ro">From Time : {{TTableModel.FROM_DATE_TIME | date:'HH:MM'}}</ion-row>
+                <ion-row nowrap class="ro">To Time : {{TTableModel.TO_DATE_TIME | date:'HH:MM'}}</ion-row>
+                <ion-row nowrap class="ro">Calc. Type : {{TTableModel.ST_ID}}</ion-row>
+                <ion-row nowrap class="ro">Tpl. Used : {{TTableModel.ST_TITLE}}</ion-row>
+               
+            </div>
+             
+          </ion-grid>
+        </ion-card> -->
+  
 </ion-content>
